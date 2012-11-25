@@ -3,17 +3,16 @@
  * @file
  * Install, update, and uninstall functions for the vklikebutton module.
  */
-// $Id$
 
 /**
- * Implementation of hook_install().
+ * Implements hook_install().
  */
 function vklikebutton_install() {
 //  There really is no "schema" to install.
 }
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function vklikebutton_uninstall() {
   variable_del('vklikebutton_full_node_display');

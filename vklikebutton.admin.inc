@@ -1,7 +1,5 @@
 <?php
 
-// $Id$
-
 /**
  * @file
  * Admin functions for vklikebutton.
@@ -104,7 +102,7 @@ function vklikebutton_dynamic_settings() {
     '#default_value' => variable_get('vklikebutton_weight', 50),
     '#description' => t('The weight determines where, at the content block, the like button will appear. The larger the weight, the lower it will appear on the node. For example, if you want the button to appear more toward the top of the node, choose <em>-40</em> as opposed to <em>-39, -38, 0, 1,</em> or <em>50,</em> etc. To position the Like button in its own block, go to the ' . l(t('block page'), 'admin/structure/block') . '.'),
     );
-    
+
   $form['#validate'] = array('vklikebutton_config_form_validate');
   return system_settings_form($form);
 }

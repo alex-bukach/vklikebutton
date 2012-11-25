@@ -1,7 +1,4 @@
 <?php
-
-// $Id$
-
 /**
  * @file
  * Adds VKontakte's "Like" button to each selected node type.
@@ -62,11 +59,9 @@ function vklikebutton_menu() {
  * Implements of hook_node_view().
  */
 function vklikebutton_node_view($node, $view_mode) {
-  global $user, $base_url;
   $types = variable_get('vklikebutton_node_types', array());
   $fullnodedisplay = variable_get('vklikebutton_full_node_display', 0);
   $teaserdisplay = variable_get('vklikebutton_teaser_display', 0);
-  $full = ($view_mode == 'full') ? TRUE : FALSE;
   $show = (!empty($types[$node->type]) && user_access('access vklikebutton'));
   // Thanks to corbacho for supplying the code for the $webpage_to_like variable...
   // (It was apparently throwing errors/notices the way I had it set up.)
@@ -76,15 +71,17 @@ function vklikebutton_node_view($node, $view_mode) {
   if ($item) {
     if ($item[0]['summary']) {
       $description = check_plain(strip_tags($item[0]['summary']));
-    } else {
+    }
+    else {
       $description = vklikebutton_trim_text(array(
           'max_length' => 140,
           'word_boundary' => TRUE,
           'ellipsis' => TRUE,
           'html' => TRUE,
-              ), check_plain(strip_tags($item[0]['safe_value']))); //trim body
+      ), check_plain(strip_tags($item[0]['safe_value'])));
     }
-  } else {
+  }
+  else {
     $description = '';
   }
   $conf = array(
@@ -139,7 +136,7 @@ function vklikebutton_permission() {
 }
 
 /**
- * Implementation of hook_block_info()
+ * Implements of hook_block_info().
  */
 function vklikebutton_block_info() {
   $fullnodedisplay = variable_get('vklikebutton_full_node_display', 0);
@@ -157,10 +154,9 @@ function vklikebutton_block_info() {
 }
 
 /**
- * Implementation of hook_block_configure()
+ * Implements of hook_block_configure().
  */
 function vklikebutton_block_configure($delta = '') {
-  global $base_url;
   $form = array();
   if ($delta == 'vklikebutton_static_block') {
     $form['vklikebutton_static_block'] = array(
@@ -186,7 +182,7 @@ function vklikebutton_block_configure($delta = '') {
 }
 
 /**
- * Implementation of hook_block_view()
+ * Implements of hook_block_view().
  */
 function vklikebutton_block_view($delta = '') {
   global $base_url;
@@ -194,7 +190,8 @@ function vklikebutton_block_view($delta = '') {
   $types = variable_get('vklikebutton_node_types', array());
   if ($node) {
     $show = (!empty($types[$node->type]) && user_access('access vklikebutton'));
-  } else {
+  }
+  else {
     $show = NULL;
   }
   $fullnodedisplay = variable_get('vklikebutton_full_node_display', 0);
@@ -207,15 +204,17 @@ function vklikebutton_block_view($delta = '') {
         if ($item) {
           if ($item[0]['summary']) {
             $description = check_plain(strip_tags($item[0]['summary']));
-          } else {
+          }
+          else {
             $description = vklikebutton_trim_text(array(
                 'max_length' => 255,
                 'word_boundary' => TRUE,
                 'ellipsis' => TRUE,
                 'html' => TRUE,
-                    ), check_plain(strip_tags($item[0]['safe_value']))); //trim body
+                    ), check_plain(strip_tags($item[0]['safe_value'])));
           }
-        } else {
+        }
+        else {
           $description = '';
         }
         $conf = array(
@@ -256,6 +255,9 @@ function vklikebutton_block_view($delta = '') {
   return $block;
 }
 
+/*
+ * Returns field content to display
+ */
 function _vklikebutton_field($webpage_to_like, $conf) {
   $webpage_to_like = urlencode($webpage_to_like);
   $width = $conf['width'];
@@ -269,7 +271,7 @@ function _vklikebutton_field($webpage_to_like, $conf) {
   $url = $conf['url'];
   $image = $conf['image'];
   $page_id = $conf['page_id'];
-  
+
   $element_id = 'vk_like_' . $page_id;
 
   $options = array();
@@ -303,12 +305,12 @@ function _vklikebutton_field($webpage_to_like, $conf) {
 }
 
 /**
- * Trim the text down to the specified length.
+ * Trims the text down to the specified length.
  */
 function vklikebutton_trim_text($alter, $value) {
   if (drupal_strlen($value) > $alter['max_length']) {
     $value = drupal_substr($value, 0, $alter['max_length']);
-    // TODO: replace this with cleanstring of ctools
+
     if (!empty($alter['word_boundary'])) {
       $regex = "(.*)\b.+";
       if (function_exists('mb_ereg')) {
