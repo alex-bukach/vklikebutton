@@ -273,15 +273,15 @@ function _vklikebutton_field($webpage_to_like, $conf) {
   $element_id = 'vk_like_' . $page_id;
 
   $options = array();
-  if ($width) $options[] = 'width: "' . json_encode($width) . '"';
-  if ($height) $options[] = 'height: "' . json_encode($height) . '"';
-  if ($type) $options[] = 'type: "' . json_encode($type) . '"';
-  if (!is_null($verb)) $options[] = 'verb: "' . json_encode($verb) . '"';
-  if ($title) $options[] = 'pageTitle: "' . json_encode($title) . '"';
-  if ($description) $options[] = 'pageDescription: "' . json_encode($description) . '"';
-  if ($url) $options[] = 'pageUrl: "' . json_encode($url) . '"';
-  if ($image) $options[] = 'pageImage: "' . json_encode($image) . '"';
-  if ($text) $options[] = 'text: "' . json_encode($text) . '"';
+  if ($width) $options[] = 'width: ' . json_encode($width);
+  if ($height) $options[] = 'height: ' . json_encode($height);
+  if ($type) $options[] = 'type: ' . json_encode($type);
+  if (!is_null($verb)) $options[] = 'verb: ' . json_encode($verb);
+  if ($title) $options[] = 'pageTitle: ' . json_encode($title);
+  if ($description) $options[] = 'pageDescription: ' . json_encode($description);
+  if ($url) $options[] = 'pageUrl: ' . json_encode($url);
+  if ($image) $options[] = 'pageImage: ' . json_encode($image);
+  if ($text) $options[] = 'text: ' . json_encode($text);
 
   $output = '<div id="' . $element_id . '"></div>';
   drupal_add_js('http://vk.com/js/api/openapi.js?62', array(
