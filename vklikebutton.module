@@ -77,7 +77,7 @@ function vklikebutton_node_view($node, $view_mode) {
     if ($item[0]['summary']) {
       $description = check_plain(strip_tags($item[0]['summary']));
     } else {
-      $description = views_trim_text(array(
+      $description = vklikebutton_trim_text(array(
           'max_length' => 140,
           'word_boundary' => TRUE,
           'ellipsis' => TRUE,
@@ -208,7 +208,7 @@ function vklikebutton_block_view($delta = '') {
           if ($item[0]['summary']) {
             $description = check_plain(strip_tags($item[0]['summary']));
           } else {
-            $description = views_trim_text(array(
+            $description = vklikebutton_trim_text(array(
                 'max_length' => 255,
                 'word_boundary' => TRUE,
                 'ellipsis' => TRUE,
@@ -300,4 +300,38 @@ function _vklikebutton_field($webpage_to_like, $conf) {
       'scope' => 'footer',
   ));
   return $output;
+}
+
+/**
+ * Trim the text down to the specified length.
+ */
+function vklikebutton_trim_text($alter, $value) {
+  if (drupal_strlen($value) > $alter['max_length']) {
+    $value = drupal_substr($value, 0, $alter['max_length']);
+    // TODO: replace this with cleanstring of ctools
+    if (!empty($alter['word_boundary'])) {
+      $regex = "(.*)\b.+";
+      if (function_exists('mb_ereg')) {
+        mb_regex_encoding('UTF-8');
+        $found = mb_ereg($regex, $value, $matches);
+      }
+      else {
+        $found = preg_match("/$regex/us", $value, $matches);
+      }
+      if ($found) {
+        $value = $matches[1];
+      }
+    }
+    // Remove scraps of HTML entities from the end of a strings
+    $value = rtrim(preg_replace('/(?:<(?!.+>)|&(?!.+;)).*$/us', '', $value));
+
+    if (!empty($alter['ellipsis'])) {
+      $value .= t('...');
+    }
+  }
+  if (!empty($alter['html'])) {
+    $value = _filter_htmlcorrector($value);
+  }
+
+  return $value;
 }
