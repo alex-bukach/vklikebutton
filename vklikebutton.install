@@ -6,13 +6,6 @@
  */
 
 /**
- * Implements hook_install().
- */
-function vklikebutton_install() {
-//  There really is no "schema" to install.
-}
-
-/**
  * Implements hook_uninstall().
  */
 function vklikebutton_uninstall() {
@@ -35,4 +28,3 @@ function vklikebutton_uninstall() {
   variable_del('vklikebutton_page_image');
   variable_del('vklikebutton_page_text');
 }
-

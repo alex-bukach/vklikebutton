@@ -25,33 +25,37 @@ function theme_vklikebutton($conf) {
 
   $options = array();
   if ($width)
-    $options[] = 'width: "' . ($width) . '"';
+    $options[] = 'width: ' . json_encode($width);
   if ($height)
-    $options[] = 'height: "' . ($height) . '"';
+    $options[] = 'height: ' . json_encode($height);
   if ($type)
-    $options[] = 'type: "' . ($type) . '"';
+    $options[] = 'type: ' . json_encode($type);
   if (!is_null($verb))
-    $options[] = 'verb: "' . ($verb) . '"';
-  //if ($title) $options[] = 'pageTitle: "' . ($title) . '"';
-  // if ($description) $options[] = 'pageDescription: "' . ($text) . '"';
-  // if ($url) $options[] = 'pageUrl: "' . ($url) . '"';
-  // if ($image) $options[] = 'pageImage: "' . ($image) . '"';
-//  if ($text) $options[] = 'text: "' . ($text) . '"';
+    $options[] = 'verb: ' . json_encode($verb);
+  if ($title)
+    $options[] = 'pageTitle: ' . json_encode($title);
+  if ($description)
+    $options[] = 'pageDescription: ' . json_encode($description);
+  if ($url)
+    $options[] = 'pageUrl: ' . json_encode($url);
+  if ($image)
+    $options[] = 'pageImage: ' . json_encode($image);
+  if ($text)
+    $options[] = 'text: ' . json_encode($text);
 
   $output = '<div id="' . $element_id . '"></div>';
-  drupal_add_js('http://vk.com/js/api/openapi.js', array(
+  drupal_add_js('http://vk.com/js/api/openapi.js?62', array(
     'type' => 'external',
     'weight' => '-20',
     'group' => JS_LIBRARY,
-          ), 'vklikebutton_openapi');
+  ), 'vklikebutton_openapi');
   drupal_add_js('VK.init({apiId: ' . $appid . ', onlyWidgets: true});', array(
     'type' => 'inline',
     'scope' => 'header',
     'weight' => '0',
     'group' => JS_LIBRARY,
-          ), 'vklikebutton_init');
-  drupal_add_js('VK.Widgets.Like(' . json_encode($element_id) . ', {' . implode(',
-    ', $options) . '}, 13' . $page_id . ');', array(
+  ), 'vklikebutton_init');
+  drupal_add_js('VK.Widgets.Like(' . json_encode($element_id) . ', {' . implode(', ', $options) . '}, ' . $page_id . ');', array(
     'type' => 'inline',
     'scope' => 'footer',
   ));

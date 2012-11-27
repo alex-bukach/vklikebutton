@@ -57,8 +57,7 @@ function vklikebutton_menu() {
 }
 
 /**
- * Helper function to generate the configuration array used to generate the like
- * button.
+ * Helper function returning the configuration array for the like button.
  */
 function vklikebutton_conf($type = 'dynamic') {
   global $base_url;
@@ -90,8 +89,6 @@ function vklikebutton_node_view($node, $view_mode) {
   $fullnodedisplay = variable_get('vklikebutton_full_node_display', 0);
   $teaserdisplay = variable_get('vklikebutton_teaser_display', 0);
   $show = (!empty($types[$node->type]) && user_access('access vklikebutton'));
-  // Thanks to corbacho for supplying the code for the $webpage_to_like variable...
-  // (It was apparently throwing errors/notices the way I had it set up.)
   $webpage_to_like = url("node/$node->nid", array('absolute' => TRUE));
   $likebutton_weight = variable_get('vklikebutton_weight', '0');
   $item = field_get_items('node', $node, 'body');
@@ -126,15 +123,14 @@ function vklikebutton_node_view($node, $view_mode) {
     'page_id' => $node->nid,
   );
   if ($show) {
-
-    // Content area
+    // Content area.
     if (($view_mode == 'teaser' && $teaserdisplay == 1) || ($view_mode == 'full' && $fullnodedisplay == 0)) {
       $node->content['vklikebutton_field'] = array(
         '#markup' => theme('vklikebutton', $conf),
         '#weight' => $likebutton_weight,
       );
     }
-    // Link area
+    // Link area.
     if (($view_mode == 'teaser' && $teaserdisplay == 2) || ($view_mode == 'full' && $fullnodedisplay == 2)) {
       $node->content['links']['#links']['vklikebutton_field'] = array(
         'title' => theme('vklikebutton', $conf),
@@ -151,11 +147,11 @@ function vklikebutton_permission() {
   return array(
     'administer vklikebutton' => array(
       'title' => t('Administer VK Like button'),
-      'description' => t('Perform administration tasks for VK Like button')
+      'description' => t('Perform administration tasks for VK Like button'),
     ),
     'administer vklikebutton block' => array(
       'title' => t('Administer VK Like button block'),
-      'description' => t('Perform administration tasks for VK Like button block')
+      'description' => t('Perform administration tasks for VK Like button block'),
     ),
     'access vklikebutton' => array(
       'title' => t('Access VK Like button'),
@@ -193,7 +189,7 @@ function vklikebutton_block_configure($delta = '') {
       '#collapsible' => FALSE,
     );
     $form['vklikebutton_static_block']['vklikebutton_static_config'] = array(
-      '#markup' => '<p>' . t('To configure the URL and the appearance of the button go to the ' . l(t('static Like button settings'), 'admin/config/vklikebutton/static') . '. Make sure you set the right permissions on the ' . l(t('permissions page'), 'admin/people/permissions') . '.</p>'),
+      '#markup' => t('<p>To configure the URL and the appearance of the button go to the <a href="@url">static Like button settings</a>. Make sure you set the right permissions on the <a href="@perm">permissions page</a>.</p>', array('@url' => url('admin/config/vklikebutton/static'), '@perm' => url('admin/people/permissions'))),
     );
   }
   if ($delta == 'vklikebutton_dynamic_block') {
@@ -203,7 +199,7 @@ function vklikebutton_block_configure($delta = '') {
       '#collapsible' => FALSE,
     );
     $form['vklikebutton_dynamic_block']['vklikebutton_dynamic_config'] = array(
-      '#markup' => '<p>' . t('To configure the visibility and the appearance of the button go to the ' . l(t('dynamic Like button settings'), 'admin/config/vklikebutton/dynamic') . '. You can enhance the visibility settings by using the settings on this page. Make sure you set the right permissions on the ' . l(t('permissions page'), 'admin/people/permissions') . '.</p>'),
+      '#markup' => t('<p>To configure the visibility and the appearance of the button go to the <a href="@url">dynamic Like button settings</a>. You can enhance the visibility settings by using the settings on this page. Make sure you set the right permissions on the <a href="@perm">permissions page</a>.</p>', array('@url' => url('admin/config/vklikebutton/dynamic'), '@perm' => url('admin/people/permissions'))),
     );
   }
   return $form;
@@ -262,6 +258,7 @@ function vklikebutton_block_view($delta = '') {
         $block['content'] = theme('vklikebutton', $conf);
       }
       break;
+      
     case 'vklikebutton_static_block':
       global $base_url;
       $conf = array(
@@ -315,7 +312,7 @@ function vklikebutton_trim_text($alter, $value) {
         $value = $matches[1];
       }
     }
-    // Remove scraps of HTML entities from the end of a strings
+    // Remove scraps of HTML entities from the end of a strings.
     $value = rtrim(preg_replace('/(?:<(?!.+>)|&(?!.+;)).*$/us', '', $value));
 
     if (!empty($alter['ellipsis'])) {

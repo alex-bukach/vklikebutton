@@ -52,7 +52,7 @@ function vklikebutton_dynamic_settings() {
     '#options' => array(
       t("Don't show on teasers"),
       t('Content area'),
-      t('Links area')
+      t('Links area'),
     ),
     '#default_value' => variable_get('vklikebutton_teaser_display', 0),
     '#description' => t('If you want to show the like button on teasers you can select the display area.'),
@@ -104,7 +104,7 @@ function vklikebutton_dynamic_settings() {
     '#type' => 'textfield',
     '#title' => t('Weight'),
     '#default_value' => variable_get('vklikebutton_weight', 50),
-    '#description' => t('The weight determines where, at the content block, the like button will appear. The larger the weight, the lower it will appear on the node. For example, if you want the button to appear more toward the top of the node, choose <em>-40</em> as opposed to <em>-39, -38, 0, 1,</em> or <em>50,</em> etc. To position the Like button in its own block, go to the ' . l(t('block page'), 'admin/structure/block') . '.'),
+    '#description' => t('The weight determines where, at the content block, the like button will appear. The larger the weight, the lower it will appear on the node. For example, if you want the button to appear more toward the top of the node, choose <em>-40</em> as opposed to <em>-39, -38, 0, 1,</em> or <em>50,</em> etc. To position the Like button in its own block, go to the <a href="@url">block page</a>.', array('@url' => url('admin/structure/block'))),
   );
 
   $form['#validate'] = array('vklikebutton_config_form_validate');
@@ -117,7 +117,7 @@ function vklikebutton_dynamic_settings() {
 function vklikebutton_static_settings() {
   global $base_url;
   $form['vklikebutton_static_block_description'] = array(
-    '#markup' => '<p>' . t('Set the settings for static like button. This Like button will like the given URL, no matter on which page it is displayed. To position this block go the ' . l(t('block page'), 'admin/structure/block') . '.</p>'),
+    '#markup' => t('<p>Set the settings for static like button. This Like button will like the given URL, no matter on which page it is displayed. To position this block go the <a href="@url">block page</a>.</p>', array('@url' => url('admin/structure/block'))),
   );
   $form['vklikebutton_static_block_settings'] = array(
     '#type' => 'fieldset',
@@ -128,13 +128,13 @@ function vklikebutton_static_settings() {
     '#type' => 'textfield',
     '#title' => t('Page title'),
     '#default_value' => variable_get('vklikebutton_page_title', variable_get('site_name', '')),
-    '#description' => t('Title of the page to like to display at preview of wall post')
+    '#description' => t('Title of the page to like to display at preview of wall post'),
   );
   $form['vklikebutton_static_block_settings']['vklikebutton_page_description'] = array(
     '#type' => 'textfield',
     '#title' => t('Page description'),
     '#default_value' => variable_get('vklikebutton_page_description', variable_get('site_slogan', '')),
-    '#description' => t('Description of the page to lik to display at preview of wall post')
+    '#description' => t('Description of the page to lik to display at preview of wall post'),
   );
   $form['vklikebutton_static_block_settings']['vklikebutton_page_text'] = array(
     '#type' => 'textfield',
@@ -147,13 +147,13 @@ function vklikebutton_static_settings() {
     '#type' => 'textfield',
     '#title' => t('Page URL'),
     '#default_value' => variable_get('vklikebutton_page_url', $base_url),
-    '#description' => t('URL of the page to like')
+    '#description' => t('URL of the page to like'),
   );
   $form['vklikebutton_static_block_settings']['vklikebutton_page_image'] = array(
     '#type' => 'textfield',
     '#title' => t('Page image URL'),
     '#default_value' => variable_get('vklikebutton_page_image', ''),
-    '#description' => t('URL of the image to display at preview of wall post')
+    '#description' => t('URL of the image to display at preview of wall post'),
   );
 
   $form['vklikebutton_static_block_appearance'] = array(
