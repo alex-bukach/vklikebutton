@@ -6,7 +6,7 @@
  */
 
 /**
- * Returns field content to display
+ * Returns field content to display.
  */
 function theme_vklikebutton($conf) {
   $width = $conf['width'];
@@ -24,24 +24,33 @@ function theme_vklikebutton($conf) {
   $element_id = 'vk_like_' . $page_id;
 
   $options = array();
-  if ($width)
+  if ($width) {
     $options[] = 'width: ' . json_encode($width);
-  if ($height)
+  }
+  if ($height) {
     $options[] = 'height: ' . json_encode($height);
-  if ($type)
+  }
+  if ($type) {
     $options[] = 'type: ' . json_encode($type);
-  if (!is_null($verb))
+  }
+  if (!is_null($verb)) {
     $options[] = 'verb: ' . json_encode($verb);
-  if ($title)
+  }
+  if ($title) {
     $options[] = 'pageTitle: ' . json_encode($title);
-  if ($description)
+  }
+  if ($description) {
     $options[] = 'pageDescription: ' . json_encode($description);
-  if ($url)
+  }
+  if ($url) {
     $options[] = 'pageUrl: ' . json_encode($url);
-  if ($image)
+  }
+  if ($image) {
     $options[] = 'pageImage: ' . json_encode($image);
-  if ($text)
+  }
+  if ($text) {
     $options[] = 'text: ' . json_encode($text);
+  }
 
   $output = '<div id="' . $element_id . '"></div>';
   drupal_add_js('http://vk.com/js/api/openapi.js?62', array(

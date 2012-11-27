@@ -258,7 +258,7 @@ function vklikebutton_block_view($delta = '') {
         $block['content'] = theme('vklikebutton', $conf);
       }
       break;
-      
+
     case 'vklikebutton_static_block':
       global $base_url;
       $conf = array(
