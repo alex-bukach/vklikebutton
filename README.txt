@@ -1,4 +1,4 @@
-Overview:
+﻿Overview:
 --------
 The module provides like button for one of the most popular Russian social
 networks VKontakte.ru (vk.com).
