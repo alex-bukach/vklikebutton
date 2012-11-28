@@ -292,6 +292,11 @@ function vklikebutton_trim_text($alter, $value) {
   return $value;
 }
 
+/**
+ * Returns node description taken from body for posting to the wall.
+ * 
+ * Takes description from body summary, or from body itself if summary is empty.
+ */
 function _vklikebutton_node_description($node, $field = 'body') {
   $item = field_get_items('node', $node, $field);
   if ($item) {
@@ -313,6 +318,12 @@ function _vklikebutton_node_description($node, $field = 'body') {
   ), check_plain(strip_tags($description)));
 }
 
+/**
+ * Returns an image URL for posting to the wall.
+ * 
+ * Uses first image from node body. 
+ * If there are no images in the body, it uses the site logo.
+ */
 function _vklikebutton_node_image($node, $field = 'body') {
   $item = field_get_items('node', $node, $field);
   if ($item) {
