@@ -17,7 +17,7 @@ function theme_vklikebutton($conf) {
   $title = $conf['title'];
   $description = $conf['description'];
   $text = $conf['text'];
-  $url = urlencode($conf['url']);
+  $url = $conf['url'];
   $image = $conf['image'];
   $page_id = $conf['page_id'];
 
@@ -25,35 +25,36 @@ function theme_vklikebutton($conf) {
 
   $options = array();
   if ($width) {
-    $options[] = 'width: ' . json_encode($width);
+    $options[] = 'width: "' . $width . '"';
   }
   if ($height) {
-    $options[] = 'height: ' . json_encode($height);
+    $options[] = 'height: "' . $height . '"';
   }
   if ($type) {
-    $options[] = 'type: ' . json_encode($type);
+    $options[] = 'type: "' . $type . '"';
   }
   if (!is_null($verb)) {
-    $options[] = 'verb: ' . json_encode($verb);
+    $options[] = 'verb: "' . $verb . '"';
   }
   if ($title) {
-    $options[] = 'pageTitle: ' . json_encode($title);
+    $options[] = 'pageTitle: "' . $title . '"';
   }
   if ($description) {
-    $options[] = 'pageDescription: ' . json_encode($description);
+    $options[] = 'pageDescription: "' . $description . '"';
+    $options[] = 'description: "' . $description . '"';
   }
   if ($url) {
-    $options[] = 'pageUrl: ' . json_encode($url);
+    $options[] = 'pageUrl: "' . $url . '"';
   }
-  if ($image) {
-    $options[] = 'pageImage: ' . json_encode($image);
-  }
+  $options[] = 'pageImage: "' . $image . '"';
+  $options[] = 'image: "' . $image . '"';
+
   if ($text) {
-    $options[] = 'text: ' . json_encode($text);
+    $options[] = 'text: "' . $text . '"';
   }
 
   $output = '<div id="' . $element_id . '"></div>';
-  drupal_add_js('http://vk.com/js/api/openapi.js?62', array(
+  drupal_add_js('http://vk.com/js/api/openapi.js', array(
     'type' => 'external',
     'weight' => '-20',
     'group' => JS_LIBRARY,
@@ -64,7 +65,7 @@ function theme_vklikebutton($conf) {
     'weight' => '0',
     'group' => JS_LIBRARY,
   ), 'vklikebutton_init');
-  drupal_add_js('VK.Widgets.Like(' . json_encode($element_id) . ', {' . implode(', ', $options) . '}, ' . $page_id . ');', array(
+  drupal_add_js('VK.Widgets.Like(' . json_encode($element_id) . ', {' . implode(",\n", $options) . '}, 16' . $page_id . ');', array(
     'type' => 'inline',
     'scope' => 'footer',
   ));
